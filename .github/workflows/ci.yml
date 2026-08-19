@@ -1,0 +1,100 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Python identity
+        run: python --version
+
+      - name: Compile tools
+        run: python -m compileall -q tools
+
+      - name: Unit tests
+        run: python -m unittest tools/test_validate_request.py
+
+      - name: Repository consistency
+        run: python tools/check_repo.py
+
+      - name: Validate positive control
+        run: |
+          mkdir -p artifacts
+          python tools/validate_request.py \
+            examples/machine-readable/valid-request.json \
+            --report artifacts/valid-report.json
+
+      - name: Prove missing-source negative control
+        run: |
+          set +e
+          python tools/validate_request.py \
+            examples/machine-readable/invalid-missing-source.json \
+            --expect-code MISSING_SOURCE_OF_TRUTH \
+            --report artifacts/missing-source-report.json
+          status=$?
+          set -e
+          test "$status" -eq 2
+
+      - name: Prove ambiguous-acceptance negative control
+        run: |
+          set +e
+          python tools/validate_request.py \
+            examples/machine-readable/invalid-ambiguous-acceptance.json \
+            --expect-code AMBIGUOUS_ACCEPTANCE \
+            --report artifacts/ambiguous-acceptance-report.json
+          status=$?
+          set -e
+          test "$status" -eq 2
+
+      - name: Prove scope-contradiction negative control
+        run: |
+          set +e
+          python tools/validate_request.py \
+            examples/machine-readable/invalid-scope-contradiction.json \
+            --expect-code SCOPE_CONTRADICTION \
+            --report artifacts/scope-contradiction-report.json
+          status=$?
+          set -e
+          test "$status" -eq 2
+
+      - name: Verify control outcomes
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          reports = {
+              path.name: json.loads(path.read_text())
+              for path in Path("artifacts").glob("*-report.json")
+          }
+          assert reports["valid-report.json"]["outcome"] == "VALID"
+          for name in (
+              "missing-source-report.json",
+              "ambiguous-acceptance-report.json",
+              "scope-contradiction-report.json",
+          ):
+              assert reports[name]["outcome"] == "INVALID"
+              assert reports[name]["findings"]
+          assert len(reports["valid-report.json"]["request_sha256"]) == 64
+          assert len(reports["valid-report.json"]["report_sha256"]) == 64
+          PY
+
+      - name: Upload protocol validation evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: wm3-request-protocol-v1-evidence
+          path: artifacts/*-report.json
+          if-no-files-found: error
