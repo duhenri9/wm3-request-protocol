@@ -1,96 +1,152 @@
 # WM3 Request Protocol
 
-Um protocolo simples para pedir mudanças em produtos digitais sem perder linha de controle.
+**English** · [Português (Brasil)](README.pt-BR.md)
 
-Criado pela WM3 Digital para founders, builders, devs e times pequenos que constroem com IA, agentes de código ou ciclos rápidos de produto.
+An open-source, versioned contract for turning vague product/software requests into bounded work definitions with **source of truth, scope, observable acceptance, required evidence and publication authority**.
 
-## Por que isso existe
+> A clear request is still not proof that the work was delivered.
 
-A maioria das mudanças ruins não começa no código.
+## The 60-second difference
 
-Começa em uma requisição confusa.
+Weak request:
 
-O pedido parece simples: "ajusta essa seção", "melhora esse fluxo", "corrige o checkout", "deixa a landing mais forte".
+> Fix the signup bug and make sure it works.
 
-Mas, sem contexto, escopo e critério de pronto, uma melhoria pequena pode virar uma nova direção do produto.
+V1 request:
 
-O WM3 Request Protocol ajuda você a transformar uma ideia solta em uma requisição clara, testável e segura.
+- **Problem:** duplicate email returns HTTP 500.
+- **Source of truth:** current `POST /signup` contract + reviewed base SHA.
+- **In scope:** duplicate-email handling.
+- **Out of scope:** auth provider, pricing, database schema.
+- **AC-1:** with an existing email, return HTTP 409 and do not increase user count.
+- **Verification:** integration fixture + build at the reviewed head SHA.
+- **Indeterminate when:** the fixture cannot establish the pre-request user count.
+- **Gate:** `READY_WHEN` AC-1 and required evidence are green.
 
-## Para quem é
+That is materially different from `bug fixed` or `build passes`.
 
-Use este protocolo se você é:
+## V1 contract
 
-- founder validando uma landing page, MVP ou produto com IA;
-- dev ou tech lead recebendo pedidos pouco claros;
-- builder usando agentes de código;
-- designer/produto tentando preservar a direção de uma página;
-- pessoa técnica ou não técnica tentando pedir uma mudança sem quebrar o que já funciona.
+```text
+problem
+  ↓
+source of truth + identity
+  ↓
+in scope / out of scope
+  ↓
+observable acceptance criteria
+  ↓
+required verification evidence
+  ↓
+risks + unknowns + authority
+  ↓
+publication gate
+```
 
-## O que ele ajuda a evitar
+V1 includes:
 
-- mudança de direção disfarçada de ajuste;
-- pedido sem fonte de verdade;
-- PR grande demais;
-- retrabalho;
-- copy nova contradizendo estratégia antiga;
-- checkout ou intake quebrado por mudança visual;
-- IA criando uma segunda versão do produto;
-- feature nova antes de fechar o gate atual.
+- a [normative specification](spec/request-protocol-v1.md);
+- a [Draft 2020-12 JSON Schema](schema/request.v1.schema.json);
+- a [human V1 request template](templates/request.md);
+- GitHub Issue Forms and a PR evidence template;
+- a dependency-free semantic validator/linter;
+- valid and deliberately invalid machine-readable fixtures;
+- CI negative controls;
+- focused guidance for [acceptance criteria](docs/acceptance-criteria.md), [source of truth](docs/source-of-truth.md), [anti-patterns](docs/anti-patterns.md) and the [request lifecycle](docs/request-lifecycle.md).
 
-## Regra central
+## Validate a machine-readable request
 
-Toda requisição precisa responder:
+```bash
+python tools/validate_request.py examples/machine-readable/valid-request.json
+```
 
-1. Qual é o problema real?
-2. Qual é a fonte de verdade?
-3. O que deve mudar?
-4. O que não deve mudar?
-5. Como saberemos que ficou pronto?
-6. O que precisa ser validado antes de merge/publicação?
+The validator emits deterministic request/report SHA-256 identities and a bounded request-contract result.
 
-## Como usar
+It deliberately **does not** execute the requested work, verify external authority or claim that implementation succeeded.
 
-1. Escolha o template mais próximo do seu caso.
-2. Preencha contexto, problema real e fonte de verdade antes de pedir solução.
-3. Declare o que está fora do escopo.
-4. Defina critérios observáveis de pronto.
-5. Liste as validações necessárias antes de merge, publicação ou envio para produção.
+The JSON Schema is the interchange contract. The bundled validator is intentionally a dependency-free semantic linter, not a claim of complete JSON Schema Draft 2020-12 implementation.
 
-## Templates
+## Decision vocabulary
 
-- [Requisição geral](templates/request.md)
-- [Revisão de PR](templates/pr-review.md)
-- [Bug report](templates/bug-report.md)
-- [Mudança em landing page](templates/landing-page-change.md)
-- [Checkout ou intake](templates/checkout-or-intake-change.md)
+For request-contract evaluation:
 
-## Exemplos
+- `VALID` — implemented V1 structure/semantic lint rules passed;
+- `INVALID` — a required rule is missing or contradicted;
+- `INDETERMINATE` — a consumer cannot safely establish a required fact.
 
-- [Ajuste de hero em landing page](examples/landing-page-adjustment.md)
-- [Correção de bug](examples/bug-fix-request.md)
-- [Pedido de revisão de PR](examples/pr-review-request.md)
-- [Ajuste de intake sem falso positivo](examples/audit-360-intake-request.md)
+For publication state:
 
-## Documentação
+- `DRAFT`;
+- `BLOCKED`;
+- `READY_WHEN`.
 
-- [Princípios](docs/principles.md)
-- [Glossário](docs/glossary.md)
+`READY_WHEN` means progression conditions are explicit. It does not mean they have already been satisfied.
 
-## O que este repo não é
+## Why acceptance and verification are separate
 
-Este repo não é uma documentação interna da WM3, não expõe prompts privados, não revela motor interno, não promete auditoria automática e não substitui revisão técnica, produto, segurança ou negócio.
+A build can pass while the wrong behaviour ships. A test can pass while asserting the wrong requirement.
 
-Ele é uma versão pública e simplificada para organizar pedidos melhores.
+V1 therefore separates:
 
-## Quer uma leitura mais profunda?
+**Acceptance criterion**
 
-Este protocolo ajuda a escrever pedidos melhores.
+> With an already-registered email submitted to `/signup`, the API returns HTTP 409 and persisted user count remains unchanged.
 
-O Audit 360 vai além: ele cruza promessa, fluxo, código e memória do projeto para identificar desalinhamentos, riscos e próximos passos.
+from
 
-Conheça o Audit 360:
-https://wm3digital.com.br/audit-360
+**Verification evidence**
 
-## Licença
+> Integration fixture passed; build passed at reviewed head SHA; required security review completed.
 
-MIT. Use, adapte e compartilhe. Ao usar a marca WM3 Digital, preserve a identificação autoral.
+See [Acceptance criteria](docs/acceptance-criteria.md).
+
+## Compact without becoming vague
+
+V1 has two authoring profiles:
+
+- `compact` — small/low-risk changes;
+- `standard` — material product/software changes.
+
+The compact profile keeps the same vocabulary and essential boundaries. It is not permission to omit source of truth, scope, acceptance, evidence or authority.
+
+## Request Protocol is not RepoOps
+
+WM3 Request Protocol owns **the work/request contract**.
+
+[RepoOps](https://github.com/duhenri9/RepoOps) is a separate project concerned with bounded repository execution, authority, verification and evidence receipts.
+
+A valid Request Protocol document may exist before a single line of implementation code exists. See [Protocol vs RepoOps](docs/protocol-vs-repoops.md).
+
+## Human and GitHub-native use
+
+- [General V1 request](templates/request.md)
+- [V1 bug request](templates/bug-report.md)
+- GitHub `V1 change request` Issue Form
+- GitHub `V1 bug report` Issue Form
+- [PR evidence template](.github/pull_request_template.md)
+
+Existing landing, checkout/intake and PR-review templates/examples are retained as domain guidance. The V1 vocabulary remains canonical; see the [migration guide](docs/migration-v0-to-v1.md).
+
+## Quality gate
+
+The V1 repository gate is designed to prove the protocol tooling itself, not the correctness of arbitrary downstream requests:
+
+```bash
+python -m compileall tools
+python -m unittest tools/test_validate_request.py
+python tools/validate_request.py examples/machine-readable/valid-request.json
+```
+
+CI additionally requires the invalid fixtures to fail for their expected reasons and checks repository-local documentation links/vocabulary consistency.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Protocol changes should update the specification, schema, tooling, fixtures and exposed templates together rather than allowing those representations to drift.
+
+## License and trademarks
+
+Content and code are MIT licensed. The MIT License does not grant trademark rights in WM3 Digital names or brand assets; see [TRADEMARKS.md](TRADEMARKS.md).
+
+## Related WM3 work
+
+WM3 Request Protocol is independently useful and requires no commercial WM3 product. For readers interested in related WM3 work, Audit 360 explores alignment between product promise, flow, implementation and project context.

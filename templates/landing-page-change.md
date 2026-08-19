@@ -1,49 +1,55 @@
-# Requisição — Mudança em Landing Page
+# V1 domain extension — Landing page change
 
-## 1. Página
+Use this together with [`request.md`](request.md). The V1 request contract remains canonical; this file adds landing-specific questions only.
 
-URL ou rota:
+## Domain context
 
-## 2. Problema
+- Page / route:
+- Reviewed viewport(s):
+- Current deployed/reference identity:
+- Approved design/copy source and version:
 
-O que está desalinhado?
+## Landing-specific in-scope surfaces
 
-- promessa?
-- headline?
-- CTA?
-- prova?
-- preço?
-- seção confusa?
-- ordem da página?
-- visual?
-- mobile?
+- Hero / navigation / proof / pricing / FAQ / CTA / footer:
+- Responsive breakpoint(s):
 
-## 3. Fonte de verdade
+## Protected boundaries
 
-- copy aprovada:
-- print aprovado:
-- commit/base:
-- decisão de negócio:
-- restrições:
+Confirm whether each is out of scope or explicitly authorised:
 
-## 4. Mudança solicitada
+- offer / positioning;
+- approved copy;
+- price;
+- checkout/intake destination;
+- analytics events;
+- SEO metadata/structured data;
+- authentication/data collection.
 
-## 5. Não alterar
+## Acceptance-criterion prompts
 
-- [ ] preço
-- [ ] promessa principal
-- [ ] CTA principal
-- [ ] formulário
-- [ ] checkout
-- [ ] SEO
-- [ ] navegação
-- [ ] visual base
+For each relevant AC in the V1 request, make the observation concrete:
 
-## 6. Critério de pronto
+- viewport and browser/device scope;
+- exact approved copy/source identity when copy identity matters;
+- CTA destination and resulting behaviour;
+- visibility/layout observation that can fail;
+- accessibility or keyboard behaviour when material;
+- valid alternative layout outcomes;
+- conditions that make visual evidence indeterminate.
 
-- [ ] desktop ok
-- [ ] mobile ok
-- [ ] CTA correto
-- [ ] sem promessa nova
-- [ ] sem rota quebrada
-- [ ] aprovado pelo responsável
+Do not use `looks better` or `more professional` as standalone acceptance criteria.
+
+## Verification-evidence prompts
+
+Possible evidence requirements:
+
+- desktop/mobile screenshots at named viewport sizes;
+- link/CTA smoke test;
+- build/typecheck/lint;
+- accessibility check;
+- analytics event observation;
+- approved-copy comparison;
+- production smoke after deploy when authorised.
+
+These checks support acceptance; they do not replace the observable ACs.

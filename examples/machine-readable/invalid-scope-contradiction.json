@@ -1,0 +1,39 @@
+{
+  "request_id": "REQ-BAD-SCOPE",
+  "protocol_version": "1.0",
+  "profile": "standard",
+  "context": "A checkout intake change is requested.",
+  "problem": "The request contradicts itself about whether checkout behaviour may change.",
+  "source_of_truth": [
+    {
+      "kind": "document",
+      "ref": "approved checkout contract",
+      "identity": "v3"
+    }
+  ],
+  "in_scope": ["checkout behaviour"],
+  "out_of_scope": ["Checkout behaviour"],
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "observation_scope": "checkout submission",
+      "expected_outcome": "A valid request keeps the approved checkout response contract unchanged.",
+      "verification": "Compare the observed response against approved checkout contract v3."
+    }
+  ],
+  "verification_evidence": [
+    {
+      "id": "EV-1",
+      "kind": "contract-test",
+      "required": true,
+      "how": "Run checkout contract fixture v3."
+    }
+  ],
+  "risks": ["The contradictory scope authorises and forbids the same surface."],
+  "unknowns": [],
+  "approval_authority": ["product owner"],
+  "publication_gate": {
+    "state": "BLOCKED",
+    "conditions": ["Resolve the scope contradiction."]
+  }
+}

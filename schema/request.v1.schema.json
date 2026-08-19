@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/duhenri9/wm3-request-protocol/schema/request.v1.schema.json",
+  "title": "WM3 Request Protocol V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "protocol_version",
+    "profile",
+    "context",
+    "problem",
+    "source_of_truth",
+    "in_scope",
+    "out_of_scope",
+    "acceptance_criteria",
+    "verification_evidence",
+    "risks",
+    "unknowns",
+    "approval_authority",
+    "publication_gate"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "protocol_version": {
+      "const": "1.0"
+    },
+    "profile": {
+      "enum": ["compact", "standard"]
+    },
+    "context": {
+      "type": "string",
+      "minLength": 1
+    },
+    "problem": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_of_truth": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/sourceOfTruth" }
+    },
+    "in_scope": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "out_of_scope": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/acceptanceCriterion" }
+    },
+    "verification_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/verificationEvidence" }
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "approval_authority": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "publication_gate": {
+      "$ref": "#/$defs/publicationGate"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "reversibility": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data_privacy": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "sourceOfTruth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": { "type": "string", "minLength": 1 },
+        "ref": { "type": "string", "minLength": 1 },
+        "identity": { "type": "string", "minLength": 1 }
+      }
+    },
+    "acceptanceCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "observation_scope", "expected_outcome", "verification"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "observation_scope": { "type": "string", "minLength": 1 },
+        "expected_outcome": { "type": "string", "minLength": 1 },
+        "verification": { "type": "string", "minLength": 1 },
+        "valid_alternatives": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "indeterminate_when": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "verificationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "required", "how"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "required": { "type": "boolean" },
+        "how": { "type": "string", "minLength": 1 }
+      }
+    },
+    "publicationGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "conditions"],
+      "properties": {
+        "state": {
+          "enum": ["DRAFT", "BLOCKED", "READY_WHEN"]
+        },
+        "conditions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

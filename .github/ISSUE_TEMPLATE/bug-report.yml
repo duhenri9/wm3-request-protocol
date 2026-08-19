@@ -1,0 +1,114 @@
+name: V1 bug report
+description: Describe a reproducible defect as a bounded V1 request contract.
+title: "bug: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A bug report still needs source of truth, scope, falsifiable acceptance and evidence. "Bug fixed" is not an acceptance criterion.
+
+  - type: input
+    id: request_id
+    attributes:
+      label: Request ID
+      placeholder: BUG-123
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Environment, route/component and relevant current state.
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Observed problem
+      description: What is observed and why it is a defect.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Minimal steps and inputs that reproduce the observation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_of_truth
+    attributes:
+      label: Source of truth
+      description: Expected contract/design/commit/decision plus exact identity/version where possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: in_scope
+    attributes:
+      label: In scope
+      description: Surfaces/outcomes this fix is allowed to address.
+    validations:
+      required: true
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      description: Protected boundaries that must not move during the fix.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+      description: State observable corrected behaviour, how it is verified and when the criterion is indeterminate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification_evidence
+    attributes:
+      label: Verification evidence
+      description: Reproduction-before/fix-after evidence plus required regression/build/security checks.
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks_unknowns
+    attributes:
+      label: Risks and unknowns
+      description: Known regression risks and unresolved facts.
+    validations:
+      required: true
+
+  - type: textarea
+    id: approval_authority
+    attributes:
+      label: Approval authority
+    validations:
+      required: true
+
+  - type: dropdown
+    id: publication_gate_state
+    attributes:
+      label: Publication gate state
+      options:
+        - DRAFT
+        - BLOCKED
+        - READY_WHEN
+    validations:
+      required: true
+
+  - type: textarea
+    id: publication_gate_conditions
+    attributes:
+      label: Publication gate conditions
+    validations:
+      required: true

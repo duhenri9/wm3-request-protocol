@@ -1,0 +1,130 @@
+name: V1 change request
+description: Define bounded product/software work using WM3 Request Protocol V1.
+title: "request: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form uses the same vocabulary as WM3 Request Protocol V1. It defines a request contract; it does not authorise execution or prove completion.
+
+  - type: input
+    id: request_id
+    attributes:
+      label: Request ID
+      description: Stable request identity, for example REQ-123.
+      placeholder: REQ-123
+    validations:
+      required: true
+
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Profile
+      options:
+        - compact
+        - standard
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Relevant current state before proposing implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: State the problem before the solution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: source_of_truth
+    attributes:
+      label: Source of truth
+      description: One entry per line. Include kind, ref and immutable identity/version where available.
+      placeholder: "commit | main | abc123\ndocument | checkout contract | v3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: in_scope
+    attributes:
+      label: In scope
+      description: Explicit requested/allowed surfaces or outcomes, one per line.
+    validations:
+      required: true
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      description: Protected boundaries, one per line. Write "none known" only after deliberate review.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+      description: For each criterion include id, observation scope, expected observable outcome, verification, and when it becomes indeterminate.
+      placeholder: "AC-1 | scope: duplicate signup | outcome: HTTP 409 and no user-count increase | verify: integration fixture | indeterminate: pre-count unavailable"
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification_evidence
+    attributes:
+      label: Verification evidence
+      description: Required checks/artifacts. Keep implementation checks separate from observable acceptance outcomes.
+      placeholder: "EV-1 | integration-test | required | duplicate-email fixture\nEV-2 | build | required | reviewed head SHA"
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      description: Known material failure modes. Write "none identified" only after review.
+    validations:
+      required: true
+
+  - type: textarea
+    id: unknowns
+    attributes:
+      label: Unknowns
+      description: Unresolved facts. Write "none identified" only after review.
+    validations:
+      required: true
+
+  - type: textarea
+    id: approval_authority
+    attributes:
+      label: Approval authority
+      description: Role(s) or identity allowed to approve the relevant merge/publication decision.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: publication_gate_state
+    attributes:
+      label: Publication gate state
+      options:
+        - DRAFT
+        - BLOCKED
+        - READY_WHEN
+    validations:
+      required: true
+
+  - type: textarea
+    id: publication_gate_conditions
+    attributes:
+      label: Publication gate conditions
+      description: Observable conditions that must hold before progression.
+    validations:
+      required: true

@@ -1,0 +1,39 @@
+{
+  "request_id": "REQ-BAD-ACCEPTANCE",
+  "protocol_version": "1.0",
+  "profile": "compact",
+  "context": "A reproducible defect exists in checkout.",
+  "problem": "The request does not define an observable corrected state.",
+  "source_of_truth": [
+    {
+      "kind": "production-behaviour",
+      "ref": "checkout flow",
+      "identity": "current"
+    }
+  ],
+  "in_scope": ["checkout defect"],
+  "out_of_scope": ["pricing"],
+  "acceptance_criteria": [
+    {
+      "id": "AC-1",
+      "observation_scope": "checkout flow",
+      "expected_outcome": "bug fixed",
+      "verification": "Check it manually."
+    }
+  ],
+  "verification_evidence": [
+    {
+      "id": "EV-1",
+      "kind": "manual-review",
+      "required": true,
+      "how": "Reviewer checks checkout."
+    }
+  ],
+  "risks": [],
+  "unknowns": [],
+  "approval_authority": ["product owner"],
+  "publication_gate": {
+    "state": "READY_WHEN",
+    "conditions": ["AC-1 is satisfied."]
+  }
+}
