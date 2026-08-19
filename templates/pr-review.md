@@ -1,63 +1,61 @@
-# Revisão de PR — [número / título]
+# V1 domain extension — Pull request review
 
-## 1. Objetivo declarado do PR
+A PR review compares the **actual delta** with the V1 request contract. The PR description is not the source of truth for what changed.
 
-O que o PR diz que resolve?
+## Request identity
 
-## 2. Delta real
+- Request ID:
+- Protocol version:
+- Request/source issue:
+- Reviewed base SHA:
+- Reviewed head SHA:
 
-O que o PR realmente muda?
+## Actual delta
 
-- Arquivos tocados:
-- Rotas afetadas:
-- Componentes afetados:
-- Variáveis/env afetadas:
-- Fluxos afetados:
+- Files/surfaces changed:
+- Routes/contracts/data affected:
+- Behaviour changed:
+- Behaviour preserved:
 
-## 3. Confere com o escopo?
+## Scope comparison
 
-- [ ] Sim
-- [ ] Não
-- [ ] Parcialmente
+- [ ] Actual delta is inside declared `in_scope`.
+- [ ] Protected `out_of_scope` surfaces remain unchanged.
+- [ ] Any unexpected delta is listed below.
 
-Explique:
+Unexpected delta:
 
-## 4. Mudanças fora do escopo
+- 
 
-Liste qualquer alteração inesperada.
+## Acceptance observations
 
-## 5. Risco de regressão
+For every requested AC:
 
-- Visual:
-- Copy:
-- SEO:
-- Intake/form:
-- Checkout:
-- Auth:
-- Banco:
-- E-mail:
-- Segurança:
+| Criterion | Observed result | Evidence | Decision |
+|---|---|---|---|
+| AC- |  |  | PASS / FAIL / INDETERMINATE / CRITERION_INVALID |
 
-## 6. Validações necessárias
+Do not translate `tests green` or an author statement such as `done` into acceptance without the declared observation/evidence.
 
-- [ ] diff revisado
-- [ ] build
-- [ ] typecheck
-- [ ] lint
-- [ ] smoke
-- [ ] screenshot desktop
-- [ ] screenshot mobile
-- [ ] aprovação do responsável
+## Verification evidence
 
-## 7. Decisão
+- [ ] required test/build/typecheck/lint evidence;
+- [ ] required visual/runtime evidence;
+- [ ] security/privacy evidence when declared;
+- [ ] source-of-truth freshness checked;
+- [ ] negative/failure controls observed when required.
 
-- [ ] Approve
+## Remaining risk / unknowns
+
+- 
+
+## Review decision
+
+- [ ] Approve within the bounded request/evidence reviewed
 - [ ] Request changes
 - [ ] Comment only
-- [ ] Draft / bloquear merge
+- [ ] Keep draft / block merge
 
-## 8. Condição de merge
+## Merge/publication condition
 
-Exemplo:
-
-> Pode mergear somente se o head ainda estiver em `[SHA]` e nenhum commit novo entrar depois da aprovação.
+Approval is tied to the reviewed head identity. If the head changes materially after review, required evidence/approval must be reconsidered.
