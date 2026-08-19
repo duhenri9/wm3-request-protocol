@@ -1,53 +1,79 @@
-# Bug Report — [nome do bug]
+# WM3 Request Protocol V1 — Bug Request
 
-## 1. O que aconteceu?
+## Identity
 
-Descreva o comportamento observado.
+- **Request ID:**
+- **Protocol version:** `1.0`
+- **Profile:** `compact | standard`
 
-## 2. O que deveria acontecer?
+## Context
 
-Descreva o comportamento esperado.
+- Environment:
+- Route/page/component:
+- Current version / commit:
 
-## 3. Onde acontece?
+## Observed problem
 
-- URL:
-- Página:
-- Componente:
-- Ambiente:
-- Browser/device:
+What happens now? Describe the observation, not the proposed fix.
 
-## 4. Como reproduzir
+## Reproduction
 
-1.
-2.
-3.
+1. 
+2. 
+3. 
 
-## 5. Evidências
+## Source of truth
 
-- print:
-- vídeo:
-- logs:
-- erro:
-- commit/PR relacionado:
+What defines the expected behaviour? Include exact identity/version where possible.
 
-## 6. Impacto
+| Kind | Reference | Identity / version |
+|---|---|---|
+|  |  |  |
 
-- [ ] bloqueia conversão
-- [ ] quebra visual
-- [ ] quebra formulário
-- [ ] quebra pagamento
-- [ ] quebra login
-- [ ] afeta SEO
-- [ ] cosmético
+## In scope
 
-## 7. Fora do escopo
+- 
 
-O que não deve ser alterado ao corrigir este bug?
+## Out of scope
 
-## 8. Critério de pronto
+- 
 
-- [ ] bug corrigido
-- [ ] sem regressão visual
-- [ ] sem alteração de copy indevida
-- [ ] build/typecheck passam
-- [ ] smoke revisado
+## Acceptance criteria
+
+`Bug fixed` is not a valid criterion. State the corrected observable behaviour.
+
+### AC-1
+
+- **Observation scope:**
+- **Expected observable outcome:**
+- **Verification:**
+- **Indeterminate when:**
+
+## Verification evidence
+
+| ID | Kind | Required? | How / artifact |
+|---|---|---|---|
+| EV-1 | reproduction-before | yes |  |
+| EV-2 | regression-test | yes |  |
+
+Add build/typecheck/security/visual evidence when material to the change.
+
+## Risks
+
+- 
+
+## Unknowns
+
+- 
+
+## Approval authority
+
+- 
+
+## Publication gate
+
+- **State:** `DRAFT | BLOCKED | READY_WHEN`
+- **Conditions:**
+  - 
+
+A missing reproduction, stale source of truth or non-falsifiable criterion should block or make the request indeterminate rather than produce a false success state.
