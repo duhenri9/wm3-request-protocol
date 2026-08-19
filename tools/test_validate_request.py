@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 import unittest
 from pathlib import Path
 
@@ -10,6 +11,7 @@ MODULE_PATH = ROOT / "tools" / "validate_request.py"
 SPEC = importlib.util.spec_from_file_location("validate_request", MODULE_PATH)
 assert SPEC is not None and SPEC.loader is not None
 validator = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = validator
 SPEC.loader.exec_module(validator)
 
 FIXTURES = ROOT / "examples" / "machine-readable"
