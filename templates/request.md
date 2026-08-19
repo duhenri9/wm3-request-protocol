@@ -1,103 +1,97 @@
-# Requisição — [nome da mudança]
+# WM3 Request Protocol V1 — Change Request
 
-## 1. Contexto
+> This template defines a request contract. It does not authorise execution or prove delivery.
 
-Explique rapidamente o que está acontecendo.
+## Identity
 
-- Qual projeto/página/fluxo está envolvido?
-- O que levou a esta requisição?
-- Qual é o estado atual?
+- **Request ID:**
+- **Protocol version:** `1.0`
+- **Profile:** `compact | standard`
 
-## 2. Problema real
+## Context
 
-Descreva o problema antes de propor solução.
+What is the relevant current state? Name the product, repository, route, flow or operational context.
 
-Evite começar por "faça X".
-Comece por "o que está errado, confuso, quebrado ou desalinhado?".
+## Problem
 
-## 3. Fonte de verdade
+Describe the problem **before** prescribing the implementation.
 
-Liste o que deve ser considerado como referência.
+## Source of truth
 
-Exemplos:
+List at least one source. Include an exact SHA/version/date/revision when one exists.
 
-- URL atual;
-- print aprovado;
-- PR anterior;
-- documento;
-- copy aprovada;
-- regra de negócio;
-- commit/base SHA;
-- decisão do founder;
-- comportamento em produção.
+| Kind | Reference | Identity / version |
+|---|---|---|
+| commit / document / URL / decision / production behaviour |  |  |
 
-## 4. O que deve mudar
+If a source is mutable, explain how stale-state risk will be handled.
 
-Liste apenas o que está dentro do escopo.
+## In scope
 
-- [ ] Mudança 1
-- [ ] Mudança 2
-- [ ] Mudança 3
+- 
 
-## 5. O que não deve mudar
+## Out of scope
 
-Liste explicitamente o que está fora do escopo.
+- 
 
-- [ ] Não alterar copy aprovada
-- [ ] Não alterar layout base
-- [ ] Não alterar checkout
-- [ ] Não alterar autenticação
-- [ ] Não criar nova rota
-- [ ] Não mudar preço
-- [ ] Não tocar em banco de dados
+The same surface must not appear in both lists.
 
-## 6. Critério de pronto
+## Acceptance criteria
 
-Como saberemos que a mudança ficou pronta?
+Each criterion must describe an observable outcome, not merely a mechanism such as `build passes`.
 
-- [ ] Build passa
-- [ ] Typecheck passa
-- [ ] Fluxo principal funciona
-- [ ] CTA aponta para o lugar certo
-- [ ] Mobile e desktop revisados
-- [ ] Nenhuma promessa pública foi alterada
-- [ ] Nenhum gate foi pulado
+### AC-1 — [name]
 
-## 7. Validações obrigatórias
+- **Observation scope:**
+- **Expected observable outcome:**
+- **Verification:**
+- **Valid alternatives:**
+- **Indeterminate when:**
 
-Liste os testes, checks ou revisões necessárias.
+Add more criteria only when they represent distinct observable requirements.
 
-- [ ] lint
-- [ ] typecheck
-- [ ] build
-- [ ] smoke local
-- [ ] smoke produção
-- [ ] revisão visual
-- [ ] revisão de copy
-- [ ] revisão de segurança
-- [ ] aprovação do responsável
+## Verification evidence
 
-## 8. Riscos
+List checks/artifacts required to support acceptance. Their inclusion here does not mean they have already passed.
 
-O que pode dar errado?
+| ID | Kind | Required? | How / artifact |
+|---|---|---|---|
+| EV-1 | test / build / typecheck / screenshot / security review / runtime observation | yes |  |
 
-- Pode quebrar o fluxo atual?
-- Pode criar promessa pública indevida?
-- Pode afetar checkout, intake, e-mail ou dados?
-- Pode introduzir falso positivo?
+## Risks
 
-## 9. Decisão de merge/publicação
+- 
 
-Quando pode ir para produção?
+## Unknowns
 
-- [ ] Após aprovação técnica
-- [ ] Após aprovação visual
-- [ ] Após aprovação de negócio
-- [ ] Após gate operacional
-- [ ] Não pode ir ainda; precisa virar draft
+- 
 
-## 10. Linha de controle
+## Assumptions (optional)
 
-Resumo em uma frase:
+- 
 
-> Esta requisição existe para [objetivo] sem alterar [limite importante].
+## Reversibility (optional)
+
+How can the change be rolled back or isolated if evidence later contradicts the decision?
+
+## Data / privacy impact (optional)
+
+What data boundary changes, if any?
+
+## Approval authority
+
+Who or what role is authorised to approve the relevant merge/publication decision?
+
+- 
+
+## Publication gate
+
+- **State:** `DRAFT | BLOCKED | READY_WHEN`
+- **Conditions:**
+  - 
+
+## Control line
+
+> This request exists to [observable objective] without changing [important protected boundary].
+
+If evidence is missing, contradictory, or a criterion cannot safely decide the result, report that explicitly rather than manufacturing success.
