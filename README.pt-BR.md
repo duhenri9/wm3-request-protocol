@@ -25,6 +25,19 @@ Pedido V1:
 
 Isso é diferente de dizer apenas `bug corrigido` ou `build passou`.
 
+
+### Caminho rápido para avaliação
+
+**Prova rápida:** execute o validator sem dependências sobre a fixture válida e, em seguida, veja as fixtures deliberadamente inválidas e os controles negativos do CI.
+
+~~~bash
+python tools/validate_request.py examples/machine-readable/valid-request.json
+~~~
+
+**Sinal de engenharia:** o ponto principal não é o template; é separar fonte de verdade, escopo, aceite observável, evidência exigida e autoridade de publicação em um contrato machine-readable com identidades determinísticas.
+
+**Limite da evidência:** uma requisição VALID passou pelas regras V1 implementadas. Isso não significa que a mudança de software foi executada, verificada ou aceita.
+
 ## O que existe na V1
 
 ```text
