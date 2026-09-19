@@ -25,6 +25,19 @@ V1 request:
 
 That is materially different from `bug fixed` or `build passes`.
 
+
+### Reviewer path
+
+**Fast proof:** run the dependency-free validator against the valid fixture, then inspect the deliberately invalid fixtures and CI negative controls.
+
+~~~bash
+python tools/validate_request.py examples/machine-readable/valid-request.json
+~~~
+
+**Engineering signal:** the interesting part is not the template itself; it is the separation of source of truth, scope, observable acceptance, evidence requirements and publication authority in a machine-readable contract with deterministic identities.
+
+**Evidence boundary:** a VALID request means the request contract passed the implemented V1 rules. It does not mean the requested software change was executed, verified or accepted.
+
 ## V1 contract
 
 ```text
